@@ -1,0 +1,280 @@
+///////////////////////// Diferencias entre Node.js y JavaScript /////////////////////////
+
+En JavaScript del lado del cliente tenemos el DOM y el CSSDOM así como el objeto window para manipular los elementos de nuestra página además una serie de APIs, aquí unos ejemplos:
+
+fetch
+SessionStorage y LocalStorage
+canvas
+bluetooth
+audio
+web authentication
+Mientras que en Node.js no tenemos un DOM ni un objeto windows, lo que sí tenemos son una serie de módulos que nos permiten interactuar con los recursos de la máquina como el sistema operativo y el sistema de archivos, por ejemplo:
+
+os
+fs
+http
+util
+debugger
+stream
+events
+
+
+///////////////////////// Diferencias entre Node.js y JavaScript /////////////////////////
+
+///////////////////////// Introducción a streams /////////////////////////
+
+Los Streams son una colección de datos como los arrays o strings sólo que se van procesando pedazo por pedazo, esta capacidad los hace muy poderosos porque podemos manejar una gran cantidad de datos de manera óptima.
+
+ejemplo de de manera desbordante, : "learning-node/streams/file-server.js"
+
+ejemplo de manera mas eficiente, : "learning-node/streams/stream-server.js"
+
+///////////////////////// Introducción a streams /////////////////////////
+
+///////////////////////// Readable y Writable streams /////////////////////////
+Los Readable y Writeable streams tienen los siguientes eventos y funciones respectivamente:
+
+Readable
+  Eventos
+    data. Se dispara cuando recibe datos.
+    end. Se dispara cuando termina de recibir datos.
+    error. Se dispara cuando hay un error.
+  Funciones
+    pipe
+    unpipe
+    read
+    push
+Writeable
+  Eventos
+    drain. Se dispara cuando emite datos.
+    finish. Se dispara cuando termina de emitir.
+    error. Se dispara cuando hay un error.
+  Funciones
+    write
+    end
+Recuerda que tienen estos eventos porque los heredan de la clase EventEmitter.
+
+///////////////////////// Readable y Writable streams /////////////////////////
+
+///////////////////////// Duplex y Transforms streams /////////////////////////
+Ambos sirven para simplificar nuestro código:
+
+Duplex: implementa los métodos write y read a la vez. ejemplo: "learning-node/streams/Duplex.js"
+Transform: es similar a Duplex pero con una sintaxis más corta. ejemplo: "learning-node/streams/Transforms.js"
+
+///////////////////////// Duplex y Transforms streams /////////////////////////
+
+///////////////////////// Sistema operativo y sistema de archivos /////////////////////////
+
+En esta clase vemos dos módulos básicos:
+
+  os. Sirve para consultar y manejar los recursos del sistema operativo.  ejemplo:"learning-node/so-archivos/os.js"
+  fs. Sirve para administrar (copiar, crear, borrar etc.) archivos y directorios.
+  (ejemplos: 
+    asincrono :(learning-node/so-archivos/async.js)
+    sincrono: (learning-node/so-archivos/sync-files.js)
+  )
+
+Los métodos contenidos en estos módulos (y en todo Node.js) funcionan de forma asíncrona por default, pero también se pueden ejecutar de forma síncrona, por ejemplo el método readFile() tiene su versión síncrona readFileSync().
+
+///////////////////////// Sistema operativo y sistema de archivos /////////////////////////
+
+///////////////////////// Administrar directorios y archivos /////////////////////////
+
+podemos crear carpetas con node: ejemplo:('learning-node/so-archivos/mkdir.js')
+podemos copiar archivos con node: ejemplo:('learning-node/so-archivos/copy.js')
+
+///////////////////////// Administrar directorios y archivos /////////////////////////
+
+///////////////////////// Consola, utilidades y debugging /////////////////////////
+
+Para crear una consola personalisable ,ejemplo:"learning-node/utilidades-debug/console-cass.js"
+Para poder dar opciones en en la consola, ejemplo:"learning-node/utilidades-debug/console-utils.js"
+Para poder debugear, o utilidades, ejemplo: "learning-node/utilidades-debug/util-deprecate.js"
+
+///////////////////////// Consola, utilidades y debugging /////////////////////////
+
+///////////////////////// Clusters y procesos hijos /////////////////////////
+
+na sola instancia de Node.js corre un solo hilo de ejecución. Para tomar ventaja de los sistemas con multiples core, necesitamos lanzar un cluster de procesos de Node.js para manejar la carga.
+
+El módulo cluster nos permite la creación fácil de procesos hijos que comparten el mismo puerto del servidor. Veamos un ejemplo en código:
+
+ejemplo: "learning-node/utilidades-debug/Clusters-hijos.js"
+
+///////////////////////// Clusters y procesos hijos /////////////////////////
+
+///////////////////////// Creando tu primer servidor con Express.js /////////////////////////
+
+ponemos en la terminal "npm init -y",nos genera un package.json, va mos a modificar
+y poner un comando para el desarrollo y otro para produccion. ver ("package.json")
+
+Configuramos .eslintrc.json, para que en la ora de haser tests, no haya promemas. ver(".eslintrc.json")
+
+prettierrc es una modalidad para poder formatear nuestro codigo, adonde podemos poner unas reglas a seguir ver(.prettierrc.json)
+{
+  "tabWidth": 2, //el esacio es de 2
+  "semi": true,  //vamos a tener punto y coma
+  "singleQuote": true //vamos a manejar ' envaes de ".
+}
+
+Vamos a descargar de pendencias que van a hcer solo de desarrollo:
+-  npm i -D eslint eslint-config-prettier eslint-plugin-prettier prettier
+
+para que el codigo aga el formatea automatico cuando a gamos el comit y lo subamos al servidor.
+  npx mrm lint-staged
+
+package.json:
+  {
+    "lint-staged": {
+    "*.js": "eslint --cache --fix"
+  }
+  }
+
+///////////////////////// Creando tu primer servidor con Express.js /////////////////////////
+
+///////////////////////// Request y Response Objects /////////////////////////
+
+El objeto req (Request) en Express representa el llamado HTTP y tiene diferentes propiedades del llamado, como la cadena de texto query (Query params), los parámetros de la URL (URL params), el cuerpo (Body), los encabezados (HTTP headers), etc.
+
+Para acceder al req basta con acceder al primer parámetro de nuestros router handlers (router middleware) ó middleware.
+
+Como por ejemplo así lo hemos visto siempre:
+
+-  app.get("/user/:id", function(req, res) {
+-  res.send("user " + req.params.id);
+- });
+
+Exploremos las propiedades más importantes
+req.body
+Contiene los pares de llave-valor de los datos enviados en el cuerpo (body) del llamado (request). Por defecto es undefined pero es establecido cuando se usa algún “body-parser” middleware como 
+- body-parser y multer.
+
+En Postman cuando hacemos un request y enviamos datos en la pestaña Body, estos middlewares son los que nos ayudan a entender el tipo de datos que vamos a recibir en el 
+- req.body.
+
+Aquí podemos ver como se pueden usar estos middlwares para establecer el valor del 
+- req.body:
+- const app = require("express")();
+- const bodyParser = require("body-parser");
+- const multer = require("multer");
+- const upload = multer(); // Para datos tipo multipart/form-data
+
+- app.use(bodyParser.json()); // Para datos tipo application/json
+- app.use(bodyParser.urlencoded({ extended: true })); // Para datos tipo application/x-www-form-urlencoded
+
+- app.post("/profile", upload.array(), function(req, res, next) {
+-   console.log(req.body);
+-   res.json(req.body);
+- });
+
+req.params
+Esta propiedad contiene un objeto con las propiedades equivalentes a los parámetros nombrados en la ruta. Por ejemplo, si tenemos una ruta de la forma /user/:name entonces la propiedad name está disponible como req.params.name y allí podremos ver su valor. Supongamos que llamaramos a la ruta con /user/glrodasz, entonces el valor de req.params.name sería glrodasz. Este objeto por defecto tiene el valor de un objeto vacío {}.
+
+- // GET /user/glrodasz
+- req.params.name;
+- // => "glrodasz"
+- req.query
+
+Esta propiedad contiene un objeto con las propiedades equivalentes a las cadenas de texto query de la ruta. Si no hay ninguna cadena de texto query tendrá como valor por defecto un objeto vacío {}.
+
+- req.query.q;
+- // => "tobi ferret"
+
+- // GET /shoes?order=desc&shoe[color]=blue&shoe[type]=converse
+- req.query.order;
+- // => "desc"
+
+- req.query.shoe.color;
+- // => "blue"
+
+- req.query.shoe.type;
+- // => "converse"
+
+Más información sobre los diferentes formatos que puede tener el body: https://developer.mozilla.org/es/docs/Web/HTTP/Methods/POST
+Más información sobre los query strings en: https://es.wikipedia.org/wiki/Query_string y https://tools.ietf.org/html/rfc3986#section-3.4
+
+Response Object
+El objeto res representa la respuesta HTTP que envía una aplicación en Express.
+
+Para acceder al res basta con acceder al segundo parámetro de nuestros router handlers (router middleware) o middleware.
+
+Como por ejemplo así lo hemos visto siempre:
+
+- app.get("/user/:id", function(req, res) {
+-   res.send("user " + req.params.id);
+- });
+Pero también funcionaría sin problemas:
+
+- app.get("/user/:id", function(request, response) {
+-   response.send("user " + request.params.id);
+- });
+
+Exploremos los métodos más comunes
+res.end()
+Finaliza el proceso de respuesta. Este método viene realmente del core de Node.js, específicamente del método response.end() de http.ServerResponse.
+
+Se usa para finalizar el request rápidamente sin ningún dato. Si necesitas enviar datos se debe usar res.send() y res.json().
+
+- res.end();
+- res.status(404).end();
+res.json()
+Envía una respuesta JSON. Este método envía una respuesta (con el content-type correcto) y convierte el parámetro enviado a una cadena de texto JSON haciendo uso de JSON.stringify().
+
+El parámetro puede ser cualquier tipo de JSON, incluido un objeto, un arreglo, una cadena de texto, un boolean, número, null y también puede ser usado para convertir otros valores a JSON.
+
+- res.json(null);
+- res.json({ user: "tobi" });
+- res.status(500).json({ error: "message" });
+
+res.send()
+Envía una respuesta HTTP. El parámetro body puede ser un objeto tipo Buffer, una cadena de texto, un objeto, o un arreglo. Por ejemplo:
+
+- res.send(Buffer.from("whoop"));
+- res.send({ some: "json" });
+- res.send("<p>some html</p>");
+- res.status(404).send("Sorry, we cannot find that!");
+- res.status(500).send({ error: "something blew up" });
+
+///////////////////////// Request y Response Objects /////////////////////////
+
+///////////////////////// Anatomía de una API Restful /////////////////////////
+
+REST (Representational State Transfer) es un estilo de arquitectura para construir web services, no es un estándar pero si una especificación muy usada.
+
+Las peticiones HTTP van acompañadas de un “verbo” que define el tipo de petición:
+
+> GET. Lectura de datos.
+> PUT. Reemplazar datos.
+> PATCH. Actualizar datos en un recurso específico.
+> POST. Creación de datos.
+> DELETE. Eliminación de datos.
+No es recomendable habilitar un endpoint de tipo PUT y DELETE para toda nuestra colección de datos, sólo hacerlos para recursos específicos, ya que no queremos que por error se puedan borrar todos nuestros datos
+
+///////////////////////// Anatomía de una API Restful /////////////////////////
+
+///////////////////////// Implementando un CRUD en Express.js /////////////////////////
+
+Las siglas CRUD vienen de las palabras en inglés:
+
+> Create - crear
+> Read - leer
+> Update - actualizar
+> Delete - eliminar
+
+///////////////////////// Implementando un CRUD en Express.js /////////////////////////
+
+///////////////////////// Implementando una capa de servicios /////////////////////////
+
+La arquitectura tradicional MVC se queda corta en aplicaciones modernas, por eso necesitamos una arquitectura diferente cómo la Clean Arquitecture que tiene una capa de servicios para manejar la lógica de negocio.
+
+///////////////////////// Implementando una capa de servicios /////////////////////////
+
+///////////////////////// ¿Qué es un middleware? Capa de manejo de errores usando un middleware /////////////////////////
+
+El término middleware se refiere a un sistema de software que ofrece servicios y funciones comunes para las aplicaciones. En general, el middleware se encarga de las tareas de gestión de datos, servicios de aplicaciones, mensajería, autenticación y gestión de API.
+
+Para manegar errores vamos a usar los middleware, en "utils/middleware/errorHandlers.js",
+
+///////////////////////// ¿Qué es un middleware? Capa de manejo de errores usando un middleware /////////////////////////
+
