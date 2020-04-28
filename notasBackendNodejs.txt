@@ -346,3 +346,9 @@ capturará el error. Por ejemplo:
 
 ///////////////////////// Manejo de errores asíncronos y síncronos en Express /////////////////////////
 
+///////////////////////// Capa de validación de datos usando un middleware /////////////////////////
+
+Creamos un middleware para validar datos: "utils/middleware/validationHandlers.js"
+
+///////////////////////// Capa de validación de datos usando un middleware /////////////////////////
+
