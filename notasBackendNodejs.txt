@@ -272,7 +272,16 @@ La arquitectura tradicional MVC se queda corta en aplicaciones modernas, por eso
 
 ///////////////////////// ¿Qué es un middleware? Capa de manejo de errores usando un middleware /////////////////////////
 
-El término middleware se refiere a un sistema de software que ofrece servicios y funciones comunes para las aplicaciones. En general, el middleware se encarga de las tareas de gestión de datos, servicios de aplicaciones, mensajería, autenticación y gestión de API.
+Un Middleware es una capa intermedia que intercepta la información de algo, un middleware se define por defecto con una función del siguiente formato:
+
+Formato:
+- function(req,res,next){
+- 	next()
+- }
+Donde:
+req es un httpRequest() con la información de la petición
+res es un httpResponse() con la respuesta de la petición
+next es un callback de la siguiente función a llamar
 
 Para manegar errores vamos a usar los middleware, en "utils/middleware/errorHandlers.js",
 
