@@ -7,24 +7,37 @@ const { config } = require('./config/index');
 const moviesApi = require('./routes/movies');
 
 // --- middleware ---
-const { logErrors, errorHandler } = require('./utils/middleware/errorHandlers');
-// --- middleware ---
+const { //de los errores
+  logErrors,
+  wrapErrors,
+  errorHandler,
+} = require('./utils/middleware/errorHandlers');
+  // importamos el error 404
+const notFoundHandler = require('./utils/middleware/notFoundHandler');
 
+// --- middleware ---
 
 // --- Body parser ---
 
 // entender formatos .json
 app.use(express.json());
 
-
-// como es una funciona ponemos la app de expres.
+// --- Rutas ---
+  // como es una funciona ponemos la app de expres.
 moviesApi(app);
+  // el error 404 y capturarlo, va despues de las rutas 
+app.use(notFoundHandler);
+// --- Rutas ---
+
 
 // --- middleware --- Error deven ir despues de las rutas
+  // manejadores de errores
 app.use(logErrors);
+app.use(wrapErrors);
 app.use(errorHandler);
-// --- middleware --- Error 
+// --- middleware --- Error
 
+// el el puerto que esta corriendo nuestra aplicacion
 app.listen(config.port, () => {
   console.log(`prendido http://localhost:${config.port}`);
 });

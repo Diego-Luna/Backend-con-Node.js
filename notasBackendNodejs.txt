@@ -352,3 +352,36 @@ Creamos un middleware para validar datos: "utils/middleware/validationHandlers.j
 
 ///////////////////////// Capa de validación de datos usando un middleware /////////////////////////
 
+///////////////////////// Implementando Boom /////////////////////////
+
+Descargamos boom: link(https://github.com/hapijs/boom)
+
+Lo bamos ausar para el manejode errores. Funciona con node, y con Js. en Web.
+- npm i @hapi/boom
+
+cambiamos el :
+  "errorHandlers.js", para usar boom, 
+  "index.js" actualisamos  principal,
+  "validationHandlers.js" agregamos boom,
+  Ponemos el error 404: "notFoundHandler.js",
+
+Mas sobre Boom:
+Boom nos provee una serie de utilidades para retornar errores HTTP, cada utilidad es un objeto de respuesta de tipo Boom que incluye las siguientes propiedades:
+
+- isBoom - si es true indica que es una instancia de Boom.
+
+- isServer - si es true indica que el código de respuesta es mayor o igual 500, aquí más informacion de los codigos de respuesta HTTP status Code.
+
+- message - el mensaje del error.
+- typeof - el constructor usado para crear el error (ejemplo: Boom.badRequest).
+- output - la respuesta formateada (generalmente esta es la que usamos) y contiene las siguientes claves:
+
+- statusCode - código de estatus HTTP.
+- headers - un objeto que contiene encabezados HTTP donde cada clave es un nombre de encabezado y el valor es el contenido del encabezado.
+
+payload - el objeto formateado usado como respuesta y contiene las siguientes claves:
+- statusCode - código de estatus HTTP, proviene de statusCode
+- error - nombre derivado del error HTTP statusCode.
+- message - mensaje de error derivado de error.message
+
+///////////////////////// Implementando Boom /////////////////////////
