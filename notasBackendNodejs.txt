@@ -393,3 +393,21 @@ Lo ponemos los squemas : "schemas/movies.js"
 Y la validacion : "middleware/validationHandlers.js"
 
 ///////////////////////// Implementando joi /////////////////////////
+
+///////////////////////// Cross-origin resource sharing (colucion) /////////////////////////
+
+Para solucianolo descargamos: "npm install cors" ,Link: (https://expressjs.com/en/resources/middleware/cors.html)
+
+Lo usamos en index.
+
+///////////////////////// Cross-origin resource sharing (colucion) /////////////////////////
+
+///////////////////////// helmet (mas seguridad) /////////////////////////
+
+Link : (https://github.com/helmetjs/helmet)
+Intalamos : npm install helmet --save
+
+Y lo ponemos en el index.js
+
+///////////////////////// helmet (mas seguridad) /////////////////////////
+

@@ -2,6 +2,16 @@ const express = require('express');
 
 const app = express();
 
+// --- usamos CORS ---
+var cors = require('cors')
+// --- usamos CORS ---
+
+// -- Helmet --
+const helmet = require('helmet');
+app.use(helmet());
+// -- Helmet --
+
+
 const { config } = require('./config/index');
 
 const moviesApi = require('./routes/movies');
@@ -21,6 +31,11 @@ const notFoundHandler = require('./utils/middleware/notFoundHandler');
 
 // entender formatos .json
 app.use(express.json());
+
+// --- usamos CORS ---
+app.use(cors());
+// --- usamos CORS ---
+
 
 // --- Rutas ---
   // como es una funciona ponemos la app de expres.
