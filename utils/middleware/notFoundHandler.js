@@ -5,7 +5,7 @@ function notFoundHandler(req, res) {
   // statusCode = es el error 404
   //  payload
   const {
-    output: { statusCode, payload },
+    output: { statusCode, payload }
   } = boom.notFound();
 
   res.status(statusCode).json(payload);

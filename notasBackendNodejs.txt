@@ -385,3 +385,9 @@ payload - el objeto formateado usado como respuesta y contiene las siguientes cl
 - message - mensaje de error derivado de error.message
 
 ///////////////////////// Implementando Boom /////////////////////////
+
+///////////////////////// Implementando joi /////////////////////////
+
+Descagamos joi: npm i @hapi/joi
+
+///////////////////////// Implementando joi /////////////////////////

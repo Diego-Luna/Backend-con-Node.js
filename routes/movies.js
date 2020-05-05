@@ -3,6 +3,16 @@ const express = require('express');
 // importamos nuestros servicios
 const MoviesService = require('../services/movies');
 
+// traemos nuestros esquemas de joi
+const {
+  movieIdSchema,
+  createMovieSchema,
+  updateMovieSchema,
+} = require('../utils/schemas/movies');
+// traemos nuestro codigo de validacion
+// const validationHandlers = require('../utils/middleware/validationHandlers');
+const validationHandler = require('../utils/middleware/validationHandlers');
+
 function moviesApi(app) {
   //iniciamos rutas
   const router = express.Router();
@@ -34,24 +44,32 @@ function moviesApi(app) {
   });
 
   // iniciamos con el home,=(/api/movies)  //ver por id
-  router.get('/:movieId', async function (req, res, next) {
-    // viene de la url
-    const { movieId } = req.params;
-    try {
-      const movies = await moviesService.getMovie({ movieId });
+  router.get(
+    '/:movieId',
+    validationHandler({ movieId: movieIdSchema }, 'params'),
+    async function (req, res, next) {
+      // viene de la url
+      const { movieId } = req.params;
+      try {
+        const movies = await moviesService.getMovie({ movieId });
 
-      // mandamos el estatus 200, que esta ok, y lo mandamos con .json
-      res.status(200).json({
-        data: movies, // los datos son lo que declaramos antes
-        message: 'movies retrieved', // Y los mensages para el cliente
-      });
-    } catch (err) {
-      next(err);
+        // mandamos el estatus 200, que esta ok, y lo mandamos con .json
+        res.status(200).json({
+          data: movies, // los datos son lo que declaramos antes
+          message: 'movies retrieved', // Y los mensages para el cliente
+        });
+      } catch (err) {
+        next(err);
+      }
     }
-  });
+  );
 
   // iniciamos con el home,=(/api/movies)  //crear pelicula
-  router.post('/', async function (req, res, next) {
+  router.post('/', validationHandler(createMovieSchema), async function (
+    req,
+    res,
+    next
+  ) {
     // viene desdel cuerpo, le ponemos un alisas
     const { body: movie } = req;
     try {
@@ -68,40 +86,49 @@ function moviesApi(app) {
   });
 
   // iniciamos con el home,=(/api/movies)  //para actualisar
-  router.put('/:movieId', async function (req, res, next) {
-    const { movieId } = req.params;
-    const { body: movie } = req;
-    try {
-      const updatedMoviesId = await moviesService.updateMovie({
-        movieId,
-        movie,
-      });
+  router.put(
+    '/:movieId',
+    validationHandler({ movieId: movieIdSchema }, 'params'),
+    validationHandler(updateMovieSchema),
+    async function (req, res, next) {
+      const { movieId } = req.params;
+      const { body: movie } = req;
+      try {
+        const updatedMoviesId = await moviesService.updateMovie({
+          movieId,
+          movie,
+        });
 
-      // mandamos el estatus 200, que esta ok, y lo mandamos con .json
-      res.status(200).json({
-        data: updatedMoviesId, // los datos son lo que declaramos antes
-        message: 'movies updated', // Y los mensages para el cliente
-      });
-    } catch (err) {
-      next(err);
+        // mandamos el estatus 200, que esta ok, y lo mandamos con .json
+        res.status(200).json({
+          data: updatedMoviesId, // los datos son lo que declaramos antes
+          message: 'movies updated', // Y los mensages para el cliente
+        });
+      } catch (err) {
+        next(err);
+      }
     }
-  });
+  );
 
   // iniciamos con el home,=(/api/movies)  //para borrar
-  router.delete('/:movieId', async function (req, res, next) {
-    const { movieId } = req.params;
-    try {
-      const deleteMoviesId = await moviesService.deleteMovie({ movieId });
+  router.delete(
+    '/:movieId',
+    validationHandler({ movieId: movieIdSchema }, 'params'),
+    async function (req, res, next) {
+      const { movieId } = req.params;
+      try {
+        const deleteMoviesId = await moviesService.deleteMovie({ movieId });
 
-      // mandamos el estatus 200, que esta ok, y lo mandamos con .json
-      res.status(200).json({
-        data: deleteMoviesId, // los datos son lo que declaramos antes
-        message: 'movies deleted', // Y los mensages para el cliente
-      });
-    } catch (err) {
-      next(err);
+        // mandamos el estatus 200, que esta ok, y lo mandamos con .json
+        res.status(200).json({
+          data: deleteMoviesId, // los datos son lo que declaramos antes
+          message: 'movies deleted', // Y los mensages para el cliente
+        });
+      } catch (err) {
+        next(err);
+      }
     }
-  });
+  );
 
   // reto
   // router.patch('/:movieId', async function (req, res, next) {

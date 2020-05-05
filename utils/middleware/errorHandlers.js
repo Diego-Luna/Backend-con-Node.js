@@ -5,12 +5,12 @@ const boom = require('@hapi/boom');
 const { config } = require('../../config/index');
 
 // esto no es un middleware.
-function withErrorStack(err, stack) {
+function withErrorStack(error, stack) {
   // si estamos en desarrollo
   if (config.dev) {
-    return { ...err, stack };
+    return { ...error, stack };
   }
-  return err;
+  return error;
 }
 
 // va a hacer un console.log del error
@@ -33,7 +33,7 @@ function wrapErrors(err, req, res, next) {
 function errorHandler(err, req, res, next) { //eslint-disable-line
   // apartir del error boom
   const {
-    output: { statusCode, paylod },
+    output: { statusCode, payload },
   } = err;
 
   // express imprmi los errores en formato html , lo cambiamos a.json
@@ -44,7 +44,7 @@ function errorHandler(err, req, res, next) { //eslint-disable-line
 
   // res.json(withErrorStack(err.message, err.stack));
   // como usamos boom cambiamos lo de arriba por lo de avajo:
-  res.json(withErrorStack(paylod, err.stack));
+  res.json(withErrorStack(payload, err.stack));
 }
 
 // exportamos los modulos
