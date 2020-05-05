@@ -388,6 +388,8 @@ payload - el objeto formateado usado como respuesta y contiene las siguientes cl
 
 ///////////////////////// Implementando joi /////////////////////////
 
-Descagamos joi: npm i @hapi/joi
+Descagamos joi: npm i @hapi/joi,
+Lo ponemos los squemas : "schemas/movies.js"
+Y la validacion : "middleware/validationHandlers.js"
 
 ///////////////////////// Implementando joi /////////////////////////
