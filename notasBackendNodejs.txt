@@ -411,3 +411,17 @@ Y lo ponemos en el index.js
 
 ///////////////////////// helmet (mas seguridad) /////////////////////////
 
+///////////////////////// Creación de tests para nuestros endpoints(Rutas) /////////////////////////
+
+Los tests son solo en modo desarrollo: 
+- npm i -D mocha supertest sinon proxyquire
+  (mocha: nos ayuda a correr los tests)
+  (supertest: nos permite levantar un servidor temporal)
+  (sinon: nos ayuda a crear moscks)
+  (proxyquire: nos ayuda a implenetar los moscks cuando requiramos los paquetes)
+
+Va mos a unsar :"moscks/movies.js" para los tests
+
+Testeamos nuestras rutas con mocha, en la carpeta test. lo que tra y lsale de ella
+
+///////////////////////// Creación de tests para nuestros endpoints(Rutas) /////////////////////////

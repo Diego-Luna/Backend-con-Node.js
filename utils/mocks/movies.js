@@ -1,4 +1,4 @@
-const moviesMocks = [
+const moviesMock = [
   {
     id: 'a6803b87-1b6c-4006-a86a-fd04f174c499',
     title: 'Of Human Hearts',
@@ -144,6 +144,24 @@ const moviesMocks = [
   },
 ];
 
-module.exports = {
-  moviesMocks
+function filteredMoviesMock(tag) {
+  // nos va a regresar las movies que tengan el tag seleccionado
+  // solo va mos a testear las rutas y no los servicios
+  return moviesMock.filter(movie => movie.tags.includes(tag));
 }
+// solo va mos a testear las rutas y no a los servicios
+class MoviesServiceMock {
+  async getMovies() {
+    return Promise.resolve(moviesMock);
+  }
+
+  async createMovie() {
+    return Promise.resolve(moviesMock[0]);
+  }
+}
+
+module.exports = {
+  moviesMock,
+  filteredMoviesMock,
+  MoviesServiceMock
+};
