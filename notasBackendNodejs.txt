@@ -425,3 +425,15 @@ Va mos a unsar :"moscks/movies.js" para los tests
 Testeamos nuestras rutas con mocha, en la carpeta test. lo que tra y lsale de ella
 
 ///////////////////////// Creación de tests para nuestros endpoints(Rutas) /////////////////////////
+
+///////////////////////// Creación de tests para nuestros servicios /////////////////////////
+
+Vamos a testear los servicios, asi que descartamos las librerias.
+
+Creamos un nuevo grupo de valores a testear.
+  Ver: "test/services.movies.test.js"
+
+Creamos un mocks de mongoDB la libreria.
+  ver: "utils/mocks/mongoLib.js"
+
+///////////////////////// Creación de tests para nuestros servicios /////////////////////////
