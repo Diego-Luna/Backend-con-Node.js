@@ -449,3 +449,14 @@ Si no lo tienes claro no es recomendable.
 También es recomendable hacerlo cuando tienes un bug para que tu solución de él perdure en el tiempo.
 
 ///////////////////////// Creación de tests para nuestras utilidades /////////////////////////
+
+///////////////////////// Agregando un comando para coverage /////////////////////////
+
+nyc nos permite ver el status de nuestros test
+
+descargamos :
+- npm i -D nyc
+
+nyc es parte de instalBuol
+
+///////////////////////// Agregando un comando para coverage /////////////////////////
