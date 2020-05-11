@@ -76,9 +76,9 @@ function moviesApi(app) {
       const createMovieId = await moviesService.createMovie({ movie });
 
       // mandamos el estatus 201, que esta ok, y lo mandamos con .json
-      res.status(200).json({
+      res.status(201).json({
         data: createMovieId, // los datos son lo que declaramos antes
-        message: 'movie create', // Y los mensages para el cliente
+        message: 'movie created', // Y los mensages para el cliente
       });
     } catch (err) {
       next(err);

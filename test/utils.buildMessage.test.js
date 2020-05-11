@@ -5,6 +5,8 @@ const buildMessage = require('../utils/buildMessage');
 
 // al ponerle .only asemos que solo corra esta suit de test
 describe.only('utils - buildMessage', function () {
+// describe('utils - buildMessage', function () {
+
   describe('when receives na entity and an action', function () {
     it('should return the respective message', function () {
       const result = buildMessage('movie', 'create');
