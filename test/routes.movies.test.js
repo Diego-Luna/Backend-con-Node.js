@@ -41,29 +41,17 @@ describe('routes - movies', function () {
       request.post('/api/movies').expect(201, done);
     });
 
-    // vemos lo que devuelve
     it('Should respond with the movie created id', function (done) {
       request.post('/api/movies').end((err, res) => {
-        // cpmparamos objetos
         assert.deepEqual(res.body, {
-          // comprobamos que regrese estos datos:
           data: moviesMock[0].id,
           message: 'movie created',
         });
-        // finalisa
+
         done();
       });
     });
-
-    // it('Should respond with the movie created id', function (done) {
-    //   request.post('/api/movies').end((err, res) => {
-    //     assert.deepEqual(res.body, {
-    //       data: moviesMock[0].id,
-    //       message: 'movie created',
-    //     });
-
-    //     done();
-    //   });
-    // });
   });
+
+  
 });
