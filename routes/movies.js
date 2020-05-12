@@ -13,6 +13,12 @@ const {
 // const validationHandlers = require('../utils/middleware/validationHandlers');
 const validationHandler = require('../utils/middleware/validationHandlers');
 
+const cacheResponse = require('../utils/cacheResponse');
+const {
+  FIVE_MINUTES_IN_SECONDS,
+  SIXTY_MINUTES_IN_SECONDS,
+} = require('../utils/time');
+
 function moviesApi(app) {
   //iniciamos rutas
   const router = express.Router();
@@ -25,6 +31,7 @@ function moviesApi(app) {
 
   // iniciamos con el home,=(/api/movies)  //ver todo
   router.get('/', async function (req, res, next) {
+    cacheResponse(res, FIVE_MINUTES_IN_SECONDS);
     // viene de la api
     const { tags } = req.query;
     try {
@@ -48,6 +55,8 @@ function moviesApi(app) {
     '/:movieId',
     validationHandler({ movieId: movieIdSchema }, 'params'),
     async function (req, res, next) {
+      cacheResponse(res, SIXTY_MINUTES_IN_SECONDS);
+
       // viene de la url
       const { movieId } = req.params;
       try {
@@ -129,25 +138,6 @@ function moviesApi(app) {
       }
     }
   );
-
-  // reto
-  // router.patch('/:movieId', async function (req, res, next) {
-  //   const { movieId } = req.params;
-  //   const { body: movie } = req;
-
-  //   try {
-  //     const updatedMovieId = await moviesService.partialUpdateMovie({
-  //       movieId,
-  //       movie,
-  //     });
-  //     res.status(200).json({
-  //       data: updatedMovieId,
-  //       message: 'Movie Updated patch',
-  //     });
-  //   } catch (err) {
-  //     next(err);
-  //   }
-  // });
 }
 
 module.exports = moviesApi;
